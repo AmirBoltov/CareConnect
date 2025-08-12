@@ -39,7 +39,7 @@ def get_users():
     return Response(dumps(list(cursor)), mimetype="application/json")
 
 # דוגמת POST (אם תרצה להחזיר) – כולל טיפול בשגיאות של מונגו:
-@app.post("/newUser", methods="POST")
+""" @app.post("/newUser", methods="POST")
 def create_user():
     data = request.get_json(force=True) or {}
     if not data.get("name") or not data.get("number"):
@@ -51,7 +51,7 @@ def create_user():
     except errors.DuplicateKeyError:
         return {"ok": False, "error": "duplicate key"}, 409
     except Exception as e:
-        return {"ok": False, "error": str(e)}, 500
+        return {"ok": False, "error": str(e)}, 500 """
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

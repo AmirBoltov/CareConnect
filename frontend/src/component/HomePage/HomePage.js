@@ -1,6 +1,7 @@
 import React from "react";
 import "./HomePage.css";
-
+import { useEffect } from 'react';
+import ApiServices from '../APIService/index'
 
 function Navbar() {
   return (
@@ -17,7 +18,12 @@ function Navbar() {
   );
 }
 
+
 function HomePage() {
+  
+
+
+
   return (
     <div className="app" dir="rtl">
       <Navbar />

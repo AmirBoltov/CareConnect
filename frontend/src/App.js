@@ -4,7 +4,10 @@ import HomePage from './component/HomePage/HomePage';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from './component/Login_Page/Login_Page'
 import Register from './component/Register/Register';
+import { useEffect } from 'react';
+import ApiServices from './component/APIService/index'
 function App() {
+
   return (
     <div>
       {/* <HomePage /> */}

@@ -12,6 +12,10 @@ class ApiServices
      user(){
         return axios.get(API_URL+'users', {'Access-Control-Allow-Origin': '*'})
     }
+    createUser(newUser){
+        // //console.log(1)
+         return axios.post(API_URL+'newUser', newUser,  {'Access-Control-Allow-Origin': '*'});
+     }
 }
 export default new ApiServices()
 

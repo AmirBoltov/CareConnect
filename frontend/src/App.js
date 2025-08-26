@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       {/* <HomePage /> */}
-         <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<Register />} />

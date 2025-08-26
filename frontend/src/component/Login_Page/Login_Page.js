@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import ApiServices from "../APIService";
 import "../Login_Page/Login_Page.css"
+// (אופציונלי) אם תרצה לנווט אחרי התחברות:
+// import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [users, setUsers] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  // const navigate = useNavigate(); // אופציונלי
 
   useEffect(() => {
     ApiServices.user()
@@ -29,12 +32,27 @@ function LoginForm() {
 
     if (found) {
       setMsg("התחברת בהצלחה ✅");
-      // לדוגמה:
-      // localStorage.setItem("user", JSON.stringify(found));
-      // navigate("/home");
+
+      // ⚠️ לא שומרים סיסמה ב-localStorage
+      const { password: _omit, ...safeUser } = found;
+      try {
+        localStorage.setItem("currentUser", JSON.stringify(safeUser));
+      } catch (err) {
+        console.error("Failed to save user in localStorage", err);
+      }
+
+      // אופציונלי: ניווט לדף הבית / דשבורד
+      // navigate("/");
+
     } else {
       setMsg("שם משתמש או סיסמה לא נכונים ❌");
     }
+  };
+
+  // אופציונלי: פונקציית התנתקות לשימוש עתידי
+  const logout = () => {
+    localStorage.removeItem("currentUser");
+    setMsg("התנתקת");
   };
 
   return (
@@ -68,12 +86,16 @@ function LoginForm() {
           התחבר
         </button>
 
-        {/* בלי מחלקות חדשות, רק הודעה טקסטואלית קטנה */}
         {msg ? (
           <div style={{ marginTop: 10, color: msg.includes("✅") ? "green" : "crimson" }}>
             {msg}
           </div>
         ) : null}
+
+        {/* אופציונלי: כפתור התנתקות לבדיקה */}
+        {/* <button type="button" onClick={logout} style={{ marginTop: 10 }}>
+          התנתקות (ניקוי localStorage)
+        </button> */}
       </form>
     </div>
   );

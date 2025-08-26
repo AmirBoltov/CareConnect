@@ -20,9 +20,12 @@ client = MongoClient(uri, tls=True, tlsCAFile=certifi.where(), serverSelectionTi
 db = client["database1"]
 users_collection = db["user"]  # או "users" אם כך קראת בקונסולה
 requests_collection = db["request"]
+
+
 @app.route("/")
 def home():
     return jsonify({"message": "MongoDB Flask API is running!"})
+
 
 @app.route("/users", methods=["GET"])
 def get_users():
@@ -37,6 +40,7 @@ def get_users():
 
     cursor = users_collection.find(q).limit(100)
     return Response(dumps(list(cursor)), mimetype="application/json")
+
 
 # דוגמת POST (אם תרצה להחזיר) – כולל טיפול בשגיאות של מונגו:
 @app.route("/newUser", methods=["POST"])
@@ -68,6 +72,7 @@ def get_requests():
     cursor = requests_collection.find(q).limit(100)
     return Response(dumps(list(cursor)), mimetype="application/json")
 
+
 # דוגמת POST (אם תרצה להחזיר) – כולל טיפול בשגיאות של מונגו:
 @app.route("/newrequests", methods=["POST"])
 def create_requests():
@@ -82,7 +87,6 @@ def create_requests():
         return {"ok": False, "error": "duplicate key"}, 409
     except Exception as e:
         return {"ok": False, "error": str(e)}, 500
-
 
 
 if __name__ == "__main__":

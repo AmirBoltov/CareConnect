@@ -34,6 +34,7 @@ export default function Register() {
     if ((form.password || "").length < 4) e.password = "לפחות 4 תווים";
     if (!form.location.trim()) e.location = "ציינו מיקום";
     if (!form.about.trim()) e.about = "ספרו במשפט על עצמכם";
+    if (!form.confirm) e.confirm = "חובה לאשר התחייבות זו לפני ההרשמה";
     return e;
   }, [form]);
 
@@ -153,12 +154,30 @@ export default function Register() {
                   />
                   {errors.about && <div className="text-danger small">{errors.about}</div>}
                 </div>
-
-               
+                {/* התחייבות */}
+                <div className="mb-3">
+                  <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="confirmCheck"
+                  checked={form.confirm}
+                  onChange={(e) => onChange("confirm", e.target.checked)}
+                />
+            <label className="form-check-label" htmlFor="confirmCheck">
+              אני מתחייב לא לפגוע באף אחד ולא להשתמש בפרטים לרעה
+              </label>
+              </div>
+            {!form.confirm && (
+                <div className="text-danger small">
+                  חובה לאשר התחייבות זו לפני ההרשמה
+              </div>
+                )}
+             </div>
 
                 <div className="d-flex justify-content-center gap-2">
-                  <button type="submit" className="btn btn-primary" disabled={Object.keys(errors).length > 0}>
-                    שמירה 
+                  <button type="submit" className="btn btn-primary" disabled={Object.keys(errors).length > 0} // הכפתור מושבת אם יש שגיאות
+>                   שמירה 
                   </button>
                   <button type="button" className="btn btn-secondary" onClick={resetForm}>
                     ניקוי טופס
